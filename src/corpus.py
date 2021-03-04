@@ -5,15 +5,20 @@ from datetime import datetime
 def corpus(contact, file_name="_chat"):
     """
     Saves messages from a contact as a txt in corpus folder
-    
+
     Args:
         contact: str (Optional)
             Name of contact to make a corpus from, defaults to _chat
         file_name: str
             Name of file where WhatsApp text is saved
     """
-    path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + f"\\data\\whatsapp\\{file_name}.txt"
+    # If file exists do nothing
+    corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + \
+                  f"\\data\\corpus\\{file_name}_{contact}.txt"
+    if os.path.isfile(corpus_path):
+        return
 
+    path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + f"\\data\\whatsapp\\{file_name}.txt"
     f = open(path, "r", encoding="utf-8")
     lines = f.read().split("\n")
     f.close()
@@ -52,9 +57,6 @@ def corpus(contact, file_name="_chat"):
             contact_messages.append(msg_txt)
 
     # Save as corpus
-    corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + \
-                  f"\\data\\corpus\\{file_name}_{contact}.txt"
-
     f = open(corpus_path, "w", encoding="utf-8")
     f.write(str(contact_messages))
     f.close()
