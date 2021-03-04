@@ -60,6 +60,3 @@ def corpus(contact, file_name="_chat"):
     f = open(corpus_path, "w", encoding="utf-8")
     f.write(str(contact_messages))
     f.close()
-
-if __name__ == "__main__":
-    corpus("Jinty Rai")
