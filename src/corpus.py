@@ -1,27 +1,63 @@
 import os
+from datetime import datetime
 
 
-class Corpus:
+def corpus(contact, file_name="_chat"):
     """
-    Extracts and creates a corpus from WhatsApp messages for a particular contact
+    Saves messages from a contact as a txt in corpus folder
+    
+    Args:
+        contact: str (Optional)
+            Name of contact to make a corpus from, defaults to _chat
+        file_name: str
+            Name of file where WhatsApp text is saved
     """
+    path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + f"\\data\\whatsapp\\{file_name}.txt"
 
-    def __init__(self, contact, file_name="_chat"):
-        """
-        Initialise corpus class
+    f = open(path, "r", encoding="utf-8")
+    lines = f.read().split("\n")
+    f.close()
 
-        Args:
-            contact: str (Optional)
-                Name of contact to make a corpus from, defaults to _chat
-            file_name: str
-                Name of file where WhatsApp text is saved
-        """
+    # Create a list of messages
+    messages = []
+    for line in lines:
+        # If message is media omit
+        line_split = line.split(":")
+        if line_split[-1] == " <Media omitted>":
+            continue
 
-        self.file_name = file_name
-        self.contact = contact
+        # If line does not start with a datetime append to previous message
+        datetime_str = line[:17]
+        try:
+            datetime.strptime(datetime_str, "%d/%m/%Y, %H:%M")
+        except ValueError:
+            messages[-1] += " " + line
+            continue
 
-    def extract(self):
-        # Get text
-        path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + f"/data/whatsapp/{self.file_name}.html"
+        messages.append(line)
 
-        f = open(path, "r", encoding="utf-8")
+    # Extract contact messages only
+    contact_messages = []
+    for msg in messages:
+        msg_split = msg.split(":", maxsplit=3)
+
+        try:
+            msg_contact = msg_split[1].split("-", maxsplit=2)[1][1:]
+            msg_txt = msg_split[2][1:]
+        except IndexError:
+            # If txt not found is instead a notif e.g. icon changed so skip
+            continue
+
+        if msg_contact == contact:
+            contact_messages.append(msg_txt)
+
+    # Save as corpus
+    corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + \
+                  f"\\data\\corpus\\{file_name}_{contact}.txt"
+
+    f = open(corpus_path, "w", encoding="utf-8")
+    f.write(str(contact_messages))
+    f.close()
+
+if __name__ == "__main__":
+    corpus("Jinty Rai")
