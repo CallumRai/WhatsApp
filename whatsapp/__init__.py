@@ -1,0 +1,1 @@
+from whatsapp.src.corpus import corpus
