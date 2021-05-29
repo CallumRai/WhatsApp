@@ -7,10 +7,10 @@ def corpus(contact, file_name="_chat"):
     Saves messages from a contact as a txt in corpus folder
 
     Args:
-        contact: str (Optional)
-            Name of contact to make a corpus from, defaults to _chat
-        file_name: str
-            Name of file where WhatsApp text is saved
+        contact: str
+            Name of contact to make a corpus from
+        file_name: str (Optional)
+            Name of file where WhatsApp text is saved, defaults to _chat
     """
     # If file exists do nothing
     corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + \
