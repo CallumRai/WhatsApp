@@ -14,11 +14,11 @@ def corpus(contact, file_name="_chat"):
     """
     # If file exists do nothing
     corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + \
-                  f"\\data\\corpus\\{file_name}_{contact}.txt"
+                  f"/data/corpus/{file_name}_{contact}.txt"
     if os.path.isfile(corpus_path):
         return
 
-    path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + f"\\data\\whatsapp\\{file_name}.txt"
+    path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + f"/data/whatsapp/{file_name}.txt"
     f = open(path, "r", encoding="utf-8")
     lines = f.read().split("\n")
     f.close()
