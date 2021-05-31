@@ -1,8 +1,8 @@
-from datetime import datetime
 from torch.utils.data import Dataset, random_split, RandomSampler
 import torch
 from transformers import GPT2Tokenizer
 import os
+import pickle
 
 
 class GPT2Dataset(Dataset):
@@ -96,8 +96,8 @@ class DataLoader:
         f_name = f"{self.file_name}_{self.contact}.txt"
 
         # Loads corpus as list
-        f = open(corpus_path + f_name, encoding="utf-8")
-        corpus = f.read().splitlines()
+        f = open(corpus_path + f_name, "rb")
+        corpus = pickle.load(f)
         f.close()
 
         # Filter out empty strings

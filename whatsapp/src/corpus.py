@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+import pickle
 
 
 def corpus(contact, file_name="_chat"):
@@ -14,7 +15,7 @@ def corpus(contact, file_name="_chat"):
     """
     # If file exists do nothing
     corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + \
-                  f"/data/corpus/{file_name}_{contact}.txt"
+                  f"/data/corpus/{file_name}_{contact}.pkl"
     if os.path.isfile(corpus_path):
         return
 
@@ -57,6 +58,6 @@ def corpus(contact, file_name="_chat"):
             contact_messages.append(msg_txt)
 
     # Save as corpus
-    f = open(corpus_path, "w", encoding="utf-8")
-    f.write(str(contact_messages))
+    f = open(corpus_path, "wb")
+    pickle.dump(contact_messages, f)
     f.close()
