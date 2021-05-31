@@ -93,7 +93,7 @@ class DataLoader:
         """
 
         corpus_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + "/data/corpus/"
-        f_name = f"{self.file_name}_{self.contact}.txt"
+        f_name = f"{self.file_name}_{self.contact}.pkl"
 
         # Loads corpus as list
         f = open(corpus_path + f_name, "rb")
@@ -134,7 +134,7 @@ class DataLoader:
 
         corpus_path = os.path.abspath(
             os.path.join(os.path.dirname(__file__), '..')) + "/data/corpus/"
-        f_name = f"{self.file_name}_{self.contact}.txt"
+        f_name = f"{self.file_name}_{self.contact}.pkl"
 
         # Loads corpus as list
         f = open(corpus_path + f_name, encoding="utf-8")
